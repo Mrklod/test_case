@@ -1,0 +1,15 @@
+{% extends 'tusk/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="login">
+    <h2>Авторизация</h2>
+    <form>
+        <label for="login-username">Имя пользователя или email</label>
+        <input type="text" id="login-username" name="login-username" required>
+        <label for="login-password">Пароль</label>
+        <input type="password" id="login-password" name="login-password" required>
+        <button type="submit">Войти</button>
+    </form>
+</section>
+{% endblock content %}
