@@ -14,10 +14,13 @@
     <nav>
       <ul>
         <li><a href="{% url 'main' %}">Главная</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'logout' %}">Выйти</a></li>
+        <li><a href="{% url 'profile' %}">Профиль {{ user.username }}</a></li>
+        {% else %}
         <li><a href="{% url 'register' %}">Регистрация</a></li>
         <li><a href="{% url 'login' %}">Авторизация</a></li>
-        <li><a href="#">Выйти</a></li>
-        <li><a href="{% url 'profile' %}">Профиль</a></li>
+        {% endif %}
       </ul>
     </nav>
   </header>

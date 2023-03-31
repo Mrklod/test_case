@@ -4,11 +4,12 @@
 {% block content %}
 <section class="login">
     <h2>Авторизация</h2>
-    <form>
-        <label for="login-username">Имя пользователя или email</label>
-        <input type="text" id="login-username" name="login-username" required>
-        <label for="login-password">Пароль</label>
-        <input type="password" id="login-password" name="login-password" required>
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <label for="{{ form.username.id_for_label }}"">Имя пользователя</label>
+        {{ form.username }}
+        <label for="{{ form.password.id_for_label }}">Пароль</label>
+        {{ form.password }}
         <button type="submit">Войти</button>
     </form>
 </section>

@@ -4,13 +4,18 @@
 {% block content %}
 <section class="register">
     <h2>Регистрация</h2>
-    <form>
-        <label for="username">Имя пользователя</label>
-        <input type="text" id="username" name="username" required>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-        <label for="password">Пароль</label>
-        <input type="password" id="password" name="password" required>
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <label for="{{ form.username.id_for_label }}">Имя пользователя</label>
+        {{ form.username }}
+        <label for="{{ form.phone.id_for_label }}">Телефон</label>
+        {{ form.phone }}
+        <label for="{{ form.email.id_for_label }}">Email</label>
+        {{ form.email }}
+        <label for="{{ form.password1.id_for_label }}">Пароль</label>
+        {{ form.password1 }}
+        <label for="{{ form.password2.id_for_label }}">Пароль</label>
+        {{ form.password2 }}
         <button type="submit">Зарегистрироваться</button>
     </form>
 </section>
