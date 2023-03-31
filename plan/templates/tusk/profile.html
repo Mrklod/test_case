@@ -6,21 +6,23 @@
     <h2>Личный профиль</h2>
     <div class="profile-details">
         <ul>
-            <li>Имя пользователя: <span>JohnDoe</span></li>
-            <li>Email: <span>johndoe@example.com</span></li>
+            <li>Имя пользователя: <span>{{ user.username }}</span></li>
+            <li>Email: <span>{{ user.email }}</span></li>
+            <li>Phone number: <span>{{ user.phone }}</span></li>
         </ul>
-        <button class="change-password-btn">Изменить пароль</button>
-        <button class="logout-btn">Выйти</button>
+<!--        <button class="change-password-btn">Изменить пароль</button>-->
+<!--        <button class="logout-btn">Выйти</button>-->
     </div>
     <div class="change-password">
-        <h3>Изменить пароль</h3>
-        <form>
-            <label for="old-password">Старый пароль</label>
-            <input type="password" id="old-password" name="old-password" required>
-            <label for="new-password">Новый пароль</label>
-            <input type="password" id="new-password" name="new-password" required>
-            <label for="confirm-password">Подтвердите пароль</label>
-            <input type="password" id="confirm-password" name="confirm-password" required>
+        <h3>Изменить никнейм</h3>
+        <form action="{% url 'profile' %}" method="post">
+            {% csrf_token %}
+            <label for="{{ form.username.id_for_label }}">Новый никнейм:</label>
+            {{ form.username }}
+            <label for="{{ form.email.id_for_label }}">Новая почта:</label>
+            {{ form.email }}
+            <label for="{{ form.phone.id_for_label }}">Новый номер телефона:</label>
+            {{ form.phone }}
             <button type="submit">Изменить</button>
         </form>
     </div>

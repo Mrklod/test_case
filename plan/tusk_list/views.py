@@ -3,11 +3,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import auth
-from .forms import UserRegisterForm,UserLoginForm
-
+from .forms import UserRegisterForm,UserLoginForm,ProfileForm
+from .models import Tusk
 
 def main(request):
-    return render(request,'tusk/base.html')
+    tusk_list = Tusk.objects.all()
+    context = {'tusk':tusk_list}
+    return render(request,'tusk/main.html',context=context)
 
 def register(request):
     if request.method == 'POST':
@@ -42,4 +44,15 @@ def logout(request):
 
 @login_required
 def profile(request):
-    return render(request,'tusk/profile.html')
+    prof = request.user
+    if request.method == 'POST':
+        form = ProfileForm(request.POST,instance=request.user)
+        if form.is_valid():
+            prof.username = request.POST['username']
+            prof.email = request.POST['email']
+            prof.phone = request.POST['phone']
+            prof.save()
+    else:
+        form = ProfileForm
+    context = {'form':form}
+    return render(request,'tusk/profile.html',context=context)

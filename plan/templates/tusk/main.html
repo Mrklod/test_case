@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'tusk/base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block content %}
+{% for i in tusk %}
+<h3>{{ i.title }}</h3>
+<p>{{ i.text }}</p>
+<p>{{ i.time_create }}</p>
+<p>{{ i.author }}</p>
+<hr>
+{% endfor %}
+{% endblock content %}
