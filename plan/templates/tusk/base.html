@@ -5,7 +5,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Планировщиsк</title>
+  {% block title %}/.
+  {% endblock title %}
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 <body>
@@ -15,7 +16,7 @@
       <ul>
         <li><a href="{% url 'main' %}">Главная</a></li>
         {% if user.is_authenticated %}
-        <li><a href='#'>Добавить заметку</a></li>
+        <li><a href="{% url 'add_tusk' %}">Добавить заметку</a></li>
         <li><a href="{% url 'profile' %}">Профиль {{ user.username }}</a></li>
         <li><a href="{% url 'logout' %}">Выйти</a></li>
         {% else %}

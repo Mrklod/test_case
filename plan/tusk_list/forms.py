@@ -24,3 +24,8 @@ class ProfileForm(forms.ModelForm):
         model = Users
         fields = ('username','email','phone')
 
+class TuskForm(forms.ModelForm):
+    class Meta:
+        model = Tusk
+        fields = ('title','text',)
+        widgets = {'author': forms.HiddenInput()}

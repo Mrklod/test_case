@@ -1,12 +1,20 @@
 {% extends 'tusk/base.html' %}
 {% load static %}
 
+{% block title %}
+<title>{{ title }}</title>
+{% endblock title %}
+
 {% block content %}
-{% for i in tusk %}
-<h3>{{ i.title }}</h3>
-<p>{{ i.text }}</p>
-<p>{{ i.time_create }}</p>
-<p>{{ i.author }}</p>
-<hr>
-{% endfor %}
+{% if tusk %}
+    {% for i in tusk %}
+    <h3>{{ i.title }}</h3>
+    <p>{{ i.text }}</p>
+    <p>{{ i.time_create }}</p>
+    <p>{{ i.author }}</p>
+    <hr>
+    {% endfor %}
+{% else %}
+    <h3>У тебя пока нету задач</h3>
+{% endif %}
 {% endblock content %}
