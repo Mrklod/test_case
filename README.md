@@ -1,8 +1,13 @@
-Task manager
-my app will help people plan their tasks.
-I created this project as a technical task, but I liked the idea and made the project very quickly.
-to run the project locally you need to install python, create a virtual environment and install django there
-after that,you need open terminal and write python3 manage.py runserver
-congratulations the project is launched
-
-you can use the project as for notes, tasks or plans
+<h1>Планировщик задача</h1><hr>
+Это веб приложение,для заметок/планов/задач.<br>Из возможностей регистрация и авторизация,<br>для каждого пользователя персональные посты,<br>которые вы сами можете создавать,редактировать и удалять.<br>Также присутсвует личный кабинет в котором можно изменить данные профиля.
+<h2>Установка</h2><hr>
+<h3>1.Для установки зависимостей команда:
+	<br>npm install</h3>
+<h3>2.Запустить сервер</h3>
+<br>python3 manage.py runserver
+<h3>Перейти по ссылке,которая всплыла меню</h3>
+<br>http://127.0.0.1:8000/
+<h2>Использование</h2><hr>
+Вы можете использовать програму,так как позволит ваше воображение.<br>
+Задача которую я ставил при создании приложения:
+<br>облегчить планировку задач,структурировать заметки и хранить планы в одном месте.
