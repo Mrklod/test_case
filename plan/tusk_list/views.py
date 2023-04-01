@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404,redirect
 from django.urls import reverse
 from django.contrib import auth
 from .forms import UserRegisterForm,UserLoginForm,ProfileForm,TuskForm
@@ -76,3 +76,25 @@ def add_tusk(request):
         form = TuskForm
     context = {'title':'Добавление задачи','form':form}
     return render(request,'tusk/add_tusk.html',context=context)
+
+@login_required
+def delete_post(request,pk):
+    tusk = get_object_or_404(Tusk,pk=pk)
+    if tusk.author == request.user:
+        tusk.delete()
+    return redirect('main')
+
+@login_required
+def update_post(request,pk):
+    tusk = get_object_or_404(Tusk,pk=pk)
+    if request.method == 'POST':
+        form = TuskForm(request.POST,instance=tusk)
+        if form.is_valid():
+            tusk.title = request.POST['title']
+            tusk.text = request.POST['text']
+            tusk.save()
+            return HttpResponseRedirect(reverse('main'))
+    else:
+        form = TuskForm
+    context = {'title':'Обновление задач','form':form,'tusk':tusk}
+    return render(request,'tusk/change_tusk.html',context=context)

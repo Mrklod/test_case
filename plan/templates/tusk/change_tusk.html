@@ -6,9 +6,11 @@
 {% endblock title %}
 
 {% block content %}
-<form action="{% url 'add_tusk' %}" method="post">
+<h3>{{ tusk.title }}</h3>
+<p>{{ tusk.text }}</p>
+<form action="{% url 'update_post' tusk.id %}" method="post">
     {% csrf_token %}
-    <h3>Добавить задачу</h3>
+    <h3>Обновить задачу</h3>
     <label for="{{ form.title.id_for_label }}">Заголовок:</label>
     {{ form.title }}
     <label for="{{ form.text.id_for_label }}">Текст:</label>

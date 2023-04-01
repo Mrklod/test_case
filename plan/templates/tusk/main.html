@@ -12,6 +12,11 @@
     <p>{{ i.text }}</p>
     <p>{{ i.time_create }}</p>
     <p>{{ i.author }}</p>
+    <form method="POST" action="{% url 'delete_post' i.pk %}">
+        {% csrf_token %}
+        <button type="submit">Удалить</button>
+    </form>
+    <a href="{% url 'update_post' i.pk %}">Change</a>
     <hr>
     {% endfor %}
 {% else %}
