@@ -7,6 +7,7 @@ from .forms import UserRegisterForm,UserLoginForm,ProfileForm,TuskForm
 from .models import Tusk
 from django.utils.decorators import method_decorator
 from django.views import View
+from users.models import Users
 
 
 class MainView(View):
@@ -130,3 +131,8 @@ class UpdatePostView(View):
         context = {'title': 'Обновление задач', 'form': form, 'tusk': tusk}
         return render(request, 'tusk/change_tusk.html', context=context)
 
+class TopUsersView(View):
+    def get(self,request):
+        users_top = Users.objects.all().order_by('-point')
+        context = {'title':'Top Point','users':users_top}
+        return render(request, 'tusk/top_users.html', context=context)

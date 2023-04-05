@@ -10,4 +10,5 @@ urlpatterns = [
     path('add_tusk/',AddTuskView.as_view(),name='add_tusk'),
     path('post/<int:pk>/delete/', DeletePostView.as_view(), name='delete_post'),
     path('post/<int:pk>/update/', UpdatePostView.as_view(), name='update_post'),
+    path('tops/',TopUsersView.as_view(),name='top')
 ]

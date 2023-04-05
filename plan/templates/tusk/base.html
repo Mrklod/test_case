@@ -15,6 +15,7 @@
     <nav>
       <ul>
         <li><a href="{% url 'main' %}">Главная</a></li>
+        <li><a href="{% url 'top' %}">Топ по очкам</a></li>
         {% if user.is_authenticated %}
         <li><a href="{% url 'add_tusk' %}">Добавить заметку</a></li>
         <li><a href="{% url 'profile' %}">Профиль {{ user.username }}</a></li>

@@ -1,0 +1,48 @@
+{% extends 'tusk/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>{{ title }}</title>
+{% endblock title %}
+
+{% block content %}
+<main>
+    <section>
+        <h2>Топ пользователей по очкам</h2>
+        <ol>
+            {% for i in users|slice:":10" %}
+            <li class="top">
+                <span class="username">{{ i.username }}</span>
+                <span class="points">{{ i.point }}</span>
+            </li>
+            {% empty %}
+            <p>Пока что нет пользователей с достаточным количеством очков.</p>
+            {% endfor %}
+        </ol>
+    </section>
+</main>
+<style>
+    ol {
+      list-style: none;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .username {
+      font-weight: bold;
+    }
+
+    .points {
+      font-size: 1.2rem;
+    }
+
+</style>
+{% endblock content %}
