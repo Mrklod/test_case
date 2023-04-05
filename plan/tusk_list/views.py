@@ -8,39 +8,49 @@ from .models import Tusk
 from django.utils.decorators import method_decorator
 from django.views import View
 
-def main(request):
-    context = {'title': 'Главная'}
-    if request.user.is_authenticated:
-        author = request.user
-        content = Tusk.objects.filter(author=author)
-        context['tusk'] = content
-    return render(request,'tusk/main.html',context=context)
 
-def register(request):
-    if request.method == 'POST':
+class MainView(View):
+    def get(self,request):
+        context = {'title': 'Главная'}
+        if request.user.is_authenticated:
+            author = request.user
+            content = Tusk.objects.filter(author=author)
+            context['tusk'] = content
+        return render(request, 'tusk/main.html', context=context)
+
+
+class RegisterView(View):
+    def get(self,request):
+        form = UserRegisterForm
+        context = {'form': form, 'title': 'Регистрация'}
+        return render(request, 'tusk/register.html', context=context)
+
+    def post(self,request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('login'))
-    else:
-        form = UserRegisterForm()
-    context = {'form':form,'title':'Регистрация'}
-    return render(request,'tusk/register.html',context=context)
+            return HttpResponseRedirect(reverse_lazy('login'))
 
-def login(request):
-    if request.method == 'POST':
+
+
+class LoginView(View):
+    def get(self,request):
+        form = UserLoginForm
+        context = {'form': form, 'title': 'Авторизация'}
+        return render(request, 'tusk/login.html', context=context)
+
+    def post(self,request):
         form = UserLoginForm(data=request.POST)
         if form.is_valid():
             username = request.POST['username']
             password = request.POST['password']
-            user = auth.authenticate(username=username,password=password)
+            user = auth.authenticate(username=username, password=password)
             if user:
-                auth.login(request,user)
-                return HttpResponseRedirect(reverse('main'))
-    else:
-        form = UserLoginForm()
-    context = {'form':form,'title':'Авторизация'}
-    return render(request,'tusk/login.html',context=context)
+                auth.login(request, user)
+                return HttpResponseRedirect(reverse_lazy('main'))
+        context = {'form': form, 'title': 'Авторизация'}
+        return render(request, 'tusk/login.html', context=context)
+
 
 @method_decorator(login_required,name='dispatch')
 class LogoutView(View):
@@ -52,7 +62,7 @@ class LogoutView(View):
 class ProfView(View):
 
     def get(self,request):
-        form = ProfileForm
+        form = ProfileForm(instance=request.user)
         context = {'form':form,'title':'Личный профиль'}
         return render(request,'tusk/profile.html',context=context)
 
@@ -75,20 +85,26 @@ class AddTuskView(View):
         return render(request,'tusk/add_tusk.html',context=context)
 
     def post(self,request):
+        us = request.user
         form = TuskForm(request.POST)
         if form.is_valid():
             tusk = form.save(commit=False)
             tusk.author_id = request.user.id
             tusk.save()
+            us.point = us.point + 1
+            us.save()
             return HttpResponseRedirect(reverse_lazy('main'))
 
 
 @method_decorator(login_required,name='dispatch')
 class DeletePostView(View):
     def post(self,request,pk):
+        us = request.user
         tusk = get_object_or_404(Tusk,pk=pk)
         if tusk.author == request.user:
             tusk.delete()
+            us.point = us.point - 1
+            us.save()
         return redirect('main')
 
 
@@ -96,17 +112,20 @@ class DeletePostView(View):
 class UpdatePostView(View):
     def get(self,request,pk):
         tusk = get_object_or_404(Tusk,pk = pk)
-        form = TuskForm
+        form = TuskForm(instance=tusk)
         context = {'title': 'Обновление задач', 'form': form, 'tusk': tusk}
         return render(request, 'tusk/change_tusk.html', context=context)
 
     def post(self,request,pk):
+        us = request.user
         tusk = get_object_or_404(Tusk,pk = pk)
         form = TuskForm(request.POST,instance=tusk)
         if form.is_valid():
             tusk.title = request.POST['title']
             tusk.text = request.POST['text']
             tusk.save()
+            us.point = us.point + 0.5
+            us.save()
             return HttpResponseRedirect(reverse_lazy('main'))
         context = {'title': 'Обновление задач', 'form': form, 'tusk': tusk}
         return render(request, 'tusk/change_tusk.html', context=context)

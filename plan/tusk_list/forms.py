@@ -10,9 +10,9 @@ class UserLoginForm(AuthenticationForm):
         fields = ('username','password')
 
 class UserRegisterForm(UserCreationForm):
-    username = forms.CharField(widget=forms.TextInput())
-    phone = forms.CharField(widget=forms.TextInput())
-    email = forms.CharField(widget=forms.EmailInput())
+    username = forms.CharField(initial='Никнейм',widget=forms.TextInput())
+    phone = forms.CharField(initial= "+380 ....",widget=forms.TextInput())
+    email = forms.CharField(initial= "example@gmail.com",widget=forms.EmailInput())
     password1 = forms.CharField(widget=forms.PasswordInput())
     password2 = forms.CharField(widget=forms.PasswordInput())
     class Meta:

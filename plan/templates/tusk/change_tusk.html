@@ -6,8 +6,6 @@
 {% endblock title %}
 
 {% block content %}
-<h3>{{ tusk.title }}</h3>
-<p>{{ tusk.text }}</p>
 <form action="{% url 'update_post' tusk.id %}" method="post">
     {% csrf_token %}
     <h3>Обновить задачу</h3>
